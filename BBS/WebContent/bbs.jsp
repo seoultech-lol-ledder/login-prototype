@@ -16,12 +16,13 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <title>jsp 게시판 웹사이트</title>
 <style type="text/css">
-	a{
-		color: #000000
-	}
-	a:hover {
-		color: #0000ff
-	}
+a {
+	color: #000000
+}
+
+a:hover {
+	color: #0000ff
+}
 </style>
 </head>
 
@@ -100,7 +101,8 @@
 					%>
 					<tr>
 						<td><%=list.get(i).getBbsID()%></td>
-						<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID()%>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;")
+						.replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%=list.get(i).getUserID()%></td>
 						<td><%=list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시 "
 						+ list.get(i).getBbsDate().substring(14, 16) + "분"%></td>
