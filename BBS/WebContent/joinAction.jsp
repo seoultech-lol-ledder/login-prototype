@@ -12,9 +12,7 @@
 <jsp:useBean id="user" class="user.User" scope="page" />
 <jsp:setProperty name="user" property="userID" />
 <jsp:setProperty name="user" property="userPassword" />
-<jsp:setProperty name="user" property="userName" />
-<jsp:setProperty name="user" property="userGender" />
-<jsp:setProperty name="user" property="userEmail" />
+<jsp:setProperty name="user" property="userGameID" />
 
 <!DOCTYPE html>
 <html>
@@ -25,8 +23,20 @@
 </head>
 <body>
 	<%
-		if (user.getUserID() == null || user.getUserPassword() == null || user.getUserName() == null
-				|| user.getUserGender() == null || user.getUserEmail() == null) {
+		String userID = null;
+		if (session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+
+		if (userID != null) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('이미 로그인이 되어있습니다.'')");
+			script.println("<location.href = 'main.jsp'");
+			script.println("</script>");
+		}
+		
+		if (user.getUserID() == null || user.getUserPassword() == null || user.getUserGameID() == null) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('입력이 안 된 사항이 있습니다.')");
@@ -36,7 +46,7 @@
 			UserDAO userDAO = new UserDAO(); //인스턴스생성
 			int result = userDAO.join(user);
 
-			//로그인 성공
+			//회원가입 실패
 			if (result == -1) {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
@@ -44,8 +54,9 @@
 				script.println("history.back()");
 				script.println("</script>");
 			}
-			//로그인 실패
+			//회원가입 성공
 			else {
+				session.setAttribute("userID", user.getUserID());
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("location.href = 'main.jsp'");

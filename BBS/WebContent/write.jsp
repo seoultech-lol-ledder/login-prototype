@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -15,6 +17,19 @@
 </head>
 
 <body>
+	<%
+		String userID = null;
+		if (session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+		if (userID == null) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('로그인을 하세요.')");
+			script.println("location.href = 'login.jsp'");
+			script.println("</script>");
+		}
+	%>
 	<!-- 네비게이션  -->
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
@@ -30,52 +45,35 @@
 			id="#bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="main.jsp">메인</a></li>
-				<li><a href="bbs.jsp">게시판</a></li>
+				<li class="active"><a href="bbs.jsp">게시판</a></li>
 			</ul>
-
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">접속하기<span class="caret"></span></a>
+					aria-expanded="false">회원관리<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="login.jsp">로그인</a></li>
-						<li><a href="join.jsp">회원가입</a></li>
+						<li><a href="logoutAction.jsp">로그아웃</a></li>
 					</ul></li>
 			</ul>
-
 		</div>
 	</nav>
-	<!-- 로긴폼 -->
 	<div class="container">
-		<div class="col-lg-4"></div>
-		<div class="col-lg-4">
-			<!-- 점보트론 -->
-			<div class="jumbotron" style="padding-top: 20px;">
-				<!-- 로그인 정보를 숨기면서 전송post -->
-				<form method="post" action="joinAction.jsp">
-					<h3 style="text-align: center;">회원가입 화면</h3>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="아이디"
-							name="userID" maxlength="20">
-					</div>
-
-					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호"
-							name="userPassword" maxlength="20">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="게임아이디"
-							name="userGameID" maxlength="20">
-					</div>
-					<input type="submit" class="btn btn-primary form-control"
-						value="회원가입">
-
-
-				</form>
+		<form method="post" action="writeAction.jsp">
+			<div style="text-align: center;">
+				<div style="text-align: left; padding-left: 10px; margin-bottom: 20px; font-weight: bold; font-size: large;">게시판
+					글쓰기</div>
+				<div style="margin: 10px">
+					<input type="text" class="form-control" placeholder="글 제목"
+						name="bbsTitle" maxlength="50">
+				</div>
+				<div style="margin: 10px">
+					<textarea class="form-control" placeholder="글 내용" name="bbsContent"
+						maxlength="2048" style="height: 350px;"></textarea>
+				</div>
 			</div>
-		</div>
+			<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
+		</form>
 	</div>
-
 
 	<!-- 애니매이션 담당 JQUERY -->
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
