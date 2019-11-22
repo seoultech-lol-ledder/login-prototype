@@ -1,8 +1,17 @@
-CREATE TABLE USER (
-userID VARCHAR(20),
-userPassword VARCHAR(20),
-userName VARCHAR(20),
-userGender VARCHAR(20),
-userEmail VARCHAR(50),
-PRIMARY KEY (userID) 
-) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
+// 유저 테이블
+CREATE TABLE `user` (
+  `userID` varchar(20) DEFAULT NULL,
+  `userPassword` varchar(20) DEFAULT NULL,
+  `userGameID` varchar(20) DEFAULT NULL
+)
+
+// 게시판 테이블
+CREATE TABLE `bbs` (
+  `bbsID` int(11) NOT NULL DEFAULT '0',
+  `bbsTitle` varchar(50) DEFAULT NULL,
+  `userID` varchar(20) DEFAULT NULL,
+  `bbsDate` datetime DEFAULT NULL,
+  `bbsContent` varchar(2048) DEFAULT NULL,
+  `bbsAvailable` int(11) DEFAULT NULL,
+  PRIMARY KEY (`bbsID`)
+)
